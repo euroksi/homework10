@@ -23,16 +23,31 @@ public class ConvertToJSON {
         List<User> users = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String header = br.readLine(); // Пропускаємо заголовок
+            String header = br.readLine();
+            if (header != null) {
+                System.out.println("Header: " + header);
+            }
 
             String line;
             while ((line = br.readLine()) != null) {
+                System.out.println("Line: " + line);
                 String[] parts = line.split(" ");
-                String name = parts[0];
-                int age = Integer.parseInt(parts[1]);
+                if (parts.length >= 2) {
+                    String name = parts[0];
+                    int age = 0;
 
-                User user = new User(name, age);
-                users.add(user);
+                    try {
+                        age = Integer.parseInt(parts[1]);
+                    } catch (NumberFormatException e) {
+                        System.err.println("Invalid number format for age: " + parts[1]);
+                        continue;
+                    }
+
+                    User user = new User(name, age);
+                    users.add(user);
+                } else {
+                    System.err.println("Invalid line format: " + line);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -50,5 +65,31 @@ public class ConvertToJSON {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+}
+
+class User {
+    private String name;
+    private int age;
+
+    public User(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 }

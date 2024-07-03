@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 public class ValidatePhones {
     public static void main(String[] args) {
-        String filePath = "file.txt";
+        String filePath = "number.txt";
         printValidPhoneNumbers(filePath);
     }
 
