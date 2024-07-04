@@ -1,3 +1,5 @@
+package org.example;
+
 class User {
     private String name;
     private int age;
